@@ -12,14 +12,15 @@ def encrypt_vigenere(plaintext: str, keyword: str) -> str:
 
     if len(keyword) < len(plaintext):
         j = 0
-        x = len(keyword)
         for i in plaintext:
-            if j >= x:
-                keyword += keyword[j % x]
+            if j >= len(keyword):
+                keyword += keyword[j % len(keyword) - 1]
             j += 1
 
     for k in range(len(plaintext)):
         i = plaintext[k]
+        print(keyword)
+        print(plaintext)
         shift = ord(keyword[k]) % 65 if 65 <= ord(keyword[k]) <= 90 else ord(keyword[k]) % 97
         if 65 <= ord(i) <= 90:
             if ord(i)+shift > 90:
@@ -48,29 +49,8 @@ def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
     'ATTACKATDAWN'
     """
     plaintext = ""
-
-    if len(keyword) < len(ciphertext):
-        j = 0
-        x = len(keyword)
-        for i in ciphertext:
-            if j >= x:
-                keyword += keyword[j % x]
-            j += 1
-
-    for k in range(len(ciphertext)):
-        i = ciphertext[k]
-        shift = ord(keyword[k]) % 65 if 65 <= ord(keyword[k]) <= 90 else ord(keyword[k]) % 97
-        if 65 <= ord(i) <= 90:
-            if ord(i)-shift < 65:
-                plaintext += chr(ord(i) - shift + 26)
-            else:
-                plaintext += chr(ord(i) - shift)
-        elif 97 <= ord(i) <= 122:
-            if ord(i)-shift < 97:
-                plaintext += chr(ord(i) - shift + 26)
-            else:
-                plaintext += chr(ord(i) - shift)
-        else:
-            plaintext += i
-
+    # PUT YOUR CODE HERE
     return plaintext
+
+
+print(encrypt_vigenere("PYTHON", "A"))
