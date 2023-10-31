@@ -22,13 +22,13 @@ def encrypt_vigenere(plaintext: str, keyword: str) -> str:
         i = plaintext[k]
         shift = ord(keyword[k]) % 65 if 65 <= ord(keyword[k]) <= 90 else ord(keyword[k]) % 97
         if 65 <= ord(i) <= 90:
-            if ord(i)+shift > 90:
-                ciphertext += chr((ord(i)+shift) % 90 + 64)
+            if ord(i) + shift > 90:
+                ciphertext += chr((ord(i) + shift) % 90 + 64)
             else:
                 ciphertext += chr(ord(i) + shift)
         elif 97 <= ord(i) <= 122:
-            if ord(i)+shift > 122:
-                ciphertext += chr((ord(i)+shift) % 122 + 96)
+            if ord(i) + shift > 122:
+                ciphertext += chr((ord(i) + shift) % 122 + 96)
             else:
                 ciphertext += chr(ord(i) + shift)
         else:
@@ -61,12 +61,12 @@ def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
         i = ciphertext[k]
         shift = ord(keyword[k]) % 65 if 65 <= ord(keyword[k]) <= 90 else ord(keyword[k]) % 97
         if 65 <= ord(i) <= 90:
-            if ord(i)-shift < 65:
+            if ord(i) - shift < 65:
                 plaintext += chr(ord(i) - shift + 26)
             else:
                 plaintext += chr(ord(i) - shift)
         elif 97 <= ord(i) <= 122:
-            if ord(i)-shift < 97:
+            if ord(i) - shift < 97:
                 plaintext += chr(ord(i) - shift + 26)
             else:
                 plaintext += chr(ord(i) - shift)
