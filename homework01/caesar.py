@@ -11,16 +11,16 @@ def encrypt_caesar(plaintext: str, shift: int = 3) -> str:
     ''
     """
     ciphertext = ""
-    shift %= 26
+    shift %= ord('Z') - ord('A')
     for i in plaintext:
-        if 65 <= ord(i) <= 90:
-            if ord(i) + shift > 90:
-                ciphertext += chr((ord(i) + shift) % 90 + 64)
+        if ord('A') <= ord(i) <= ord('Z'):
+            if ord(i) + shift > ord('Z'):
+                ciphertext += chr((ord(i) + shift) % ord('Z') + ord('A') - 1)
             else:
                 ciphertext += chr(ord(i) + shift)
-        elif 97 <= ord(i) <= 122:
-            if ord(i) + shift > 122:
-                ciphertext += chr((ord(i) + shift) % 122 + 96)
+        elif ord('a') <= ord(i) <= ord('z'):
+            if ord(i) + shift > ord('z'):
+                ciphertext += chr((ord(i) + shift) % ord('z') + ord('a') - 1)
             else:
                 ciphertext += chr(ord(i) + shift)
         else:
@@ -42,16 +42,16 @@ def decrypt_caesar(ciphertext: str, shift: int = 3) -> str:
     ''
     """
     plaintext = ""
-    shift %= 26
+    shift %= ord('Z') - ord('A')
     for i in ciphertext:
-        if 65 <= ord(i) <= 90:
-            if ord(i) - shift < 65:
-                plaintext += chr(ord(i) - shift + 26)
+        if ord('A') <= ord(i) <= ord('Z'):
+            if ord(i) - shift < ord('A'):
+                plaintext += chr(ord(i) - shift + ord('Z') - ord('A'))
             else:
                 plaintext += chr(ord(i) - shift)
-        elif 97 <= ord(i) <= 122:
-            if ord(i) - shift < 97:
-                plaintext += chr(ord(i) - shift + 26)
+        elif ord('a') <= ord(i) <= ord('z'):
+            if ord(i) - shift < ord('a'):
+                plaintext += chr(ord(i) - shift + ord('Z') - ord('A'))
             else:
                 plaintext += chr(ord(i) - shift)
         else:
