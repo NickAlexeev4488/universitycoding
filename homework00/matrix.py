@@ -7,6 +7,6 @@ def dict_diff(dict1, dict2):
     return a
 
 
-newdict1 = {'1': '14', '2': '17', '3': '24'}
-newdict2 = {'1': '14', '3': '17', '2': '17'}
-print(dict_diff(newdict1, newdict2))
+newdict1 = {'1': '14', '2': '17'}
+newdict2 = {'1': '16', '3': '19'}
+
