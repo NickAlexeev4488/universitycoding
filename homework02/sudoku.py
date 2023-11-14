@@ -125,7 +125,7 @@ def find_possible_values(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -
     return {str(i) for i in range(1, len(grid) + 1)}.difference(row.union(col).union(block))
 
 
-def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]] | None:
+def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
     """Решение пазла, заданного в grid"""
     """ Как решать Судоку?
         1. Найти свободную позицию
@@ -194,7 +194,7 @@ def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
     True
     """
     grid = [["."] * 9 for i in range(9)]
-    if N >= 81:
+    if N >= 81 and solve(grid):
         return solve(grid)
 
     for i in range(N):
