@@ -140,9 +140,9 @@ def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
     if find_empty_positions(grid) == (-1, -1):
         return grid
     loc = find_empty_positions(grid)
-    row, col = loc[0], loc[1]
+    row, col = loc
 
-    for num in find_possible_values(grid, loc):
+    for num in find_possible_values(grid, (row, col)):
         grid[row][col] = num
         if solve(grid):
             return grid
