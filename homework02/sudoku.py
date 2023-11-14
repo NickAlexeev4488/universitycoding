@@ -194,7 +194,7 @@ def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
     True
     """
     grid = [["."] * 9 for i in range(9)]
-    if N >= 81 and:
+    if N >= 81:
         grid = solve(grid)
         if grid:
             return grid
