@@ -24,10 +24,9 @@ def display(grid: tp.List[tp.List[str]]) -> None:
     width = 2
     line = "+".join(["-" * (width * 3)] * 3)
     for row in range(9):
-        print("".join(grid[row][col].center(width) + ("|" if str(col)
-in "25" else "") for col in range(9)
-            )
-        )
+        print("".join(grid[row][col].center(width) + ("|" if str(col) in "25" else "") for col in range(9)
+                      )
+              )
         if str(row) in "25":
             print(line)
     print()
@@ -164,9 +163,9 @@ def check_solution(solution: tp.List[tp.List[str]]) -> bool:
             loc = (i, j)
             row, col, block = get_row(solution, loc), get_col(solution, loc), get_block(solution, loc)
             if (
-                sorted(list(set(row))) != sorted(row)
-                or sorted(list(set(col))) != sorted(col)
-                or sorted(list(set(block))) != sorted(block)
+                    sorted(list(set(row))) != sorted(row)
+                    or sorted(list(set(col))) != sorted(col)
+                    or sorted(list(set(block))) != sorted(block)
             ):
                 return False
             if solution[i][j] == ".":
