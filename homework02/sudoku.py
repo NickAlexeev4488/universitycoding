@@ -122,7 +122,8 @@ def find_possible_values(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -
     True
     """
     row, col, block = set(get_row(grid, pos)), set(get_col(grid, pos)), set(get_block(grid, pos))
-    return set({str(i) for i in range(1, len(grid) + 1)}.difference(row.union(col).union(block)))
+    possible_values = set({str(i) for i in range(1, len(grid) + 1)}.difference(row.union(col).union(block)))
+    return possible_values
 
 
 def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
@@ -189,7 +190,7 @@ def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
     >>> check_solution(solution)
     True
     """
-    grid = [["."] * 9 for i in range(9)]
+    grid = [["." for i in range(9)] for j in range(9)]
     grid = solve(grid)
     empty_cells = 81 - N
     while empty_cells > 0:
