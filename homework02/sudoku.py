@@ -122,7 +122,9 @@ def find_possible_values(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -
     True
     """
     row, col, block = set(get_row(grid, pos)), set(get_col(grid, pos)), set(get_block(grid, pos))
-    return {str(i) for i in range(1, len(grid) + 1)}.difference(row.union(col).union(block))
+    if {str(i) for i in range(1, len(grid) + 1)}.difference(row.union(col).union(block)):
+        return {str(i) for i in range(1, len(grid) + 1)}.difference(row.union(col).union(block))
+    return set()
 
 
 def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
