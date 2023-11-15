@@ -17,20 +17,20 @@ def encrypt_vigenere(plaintext: str, keyword: str) -> str:
                 keyword += keyword[i % key_length]
 
     for k in range(len(plaintext)):
-        i = plaintext[k]
+        letter = plaintext[k]
         shift = ord(keyword[k]) % ord("A") if ord("A") <= ord(keyword[k]) <= ord("Z") else ord(keyword[k]) % ord("a")
-        if ord("A") <= ord(i) <= ord("Z"):
-            if ord(i) + shift > ord("Z"):
+        if ord("A") <= ord(letter) <= ord("Z"):
+            if ord(letter) + shift > ord("Z"):
                 ciphertext += chr((ord(i) + shift) % ord("Z") + ord("A") - 1)
             else:
                 ciphertext += chr(ord(i) + shift)
-        elif ord("a") <= ord(i) <= ord("z"):
-            if ord(i) + shift > ord("z"):
-                ciphertext += chr((ord(i) + shift) % ord("z") + ord("a") - 1)
+        elif ord("a") <= ord(letter) <= ord("z"):
+            if ord(letter) + shift > ord("z"):
+                ciphertext += chr((ord(letter) + shift) % ord("z") + ord("a") - 1)
             else:
-                ciphertext += chr(ord(i) + shift)
+                ciphertext += chr(ord(letter) + shift)
         else:
-            ciphertext += i
+            ciphertext += letter
 
     return ciphertext
 
