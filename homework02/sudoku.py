@@ -191,7 +191,7 @@ def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
     >>> check_solution(solution)
     True
     """
-    grid = [["." for i in range(9)] for j in range(9)]
+    grid = [["."] * 9 for i in range(9)]
     grid = solve(grid)
     empty_cells = 81 - N
     while empty_cells > 0:
