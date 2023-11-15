@@ -11,24 +11,22 @@ def encrypt_vigenere(plaintext: str, keyword: str) -> str:
     ciphertext = ""
 
     if len(keyword) < len(plaintext):
-        j = 0
-        x = len(keyword)
-        for i in plaintext:
-            if j >= x:
-                keyword += keyword[j % x]
-            j += 1
+        key_length = len(keyword)
+        for i in range(len(plaintext)):
+            if i >= key_length:
+                keyword += keyword[i % key_length]
 
     for k in range(len(plaintext)):
         i = plaintext[k]
-        shift = ord(keyword[k]) % 65 if 65 <= ord(keyword[k]) <= 90 else ord(keyword[k]) % 97
-        if ord('A') <= ord(i) <= ord('Z'):
-            if ord(i) + shift > ord('Z'):
-                ciphertext += chr((ord(i) + shift) % ord('Z') + ord('A') - 1)
+        shift = ord(keyword[k]) % ord("A") if ord("A") <= ord(keyword[k]) <= ord("Z") else ord(keyword[k]) % ord("a")
+        if ord("A") <= ord(i) <= ord("Z"):
+            if ord(i) + shift > ord("Z"):
+                ciphertext += chr((ord(i) + shift) % ord("Z") + ord("A") - 1)
             else:
                 ciphertext += chr(ord(i) + shift)
-        elif ord('a') <= ord(i) <= ord('z'):
-            if ord(i) + shift > ord('z'):
-                ciphertext += chr((ord(i) + shift) % ord('z') + ord('a') - 1)
+        elif ord("a") <= ord(i) <= ord("z"):
+            if ord(i) + shift > ord("z"):
+                ciphertext += chr((ord(i) + shift) % ord("z") + ord("a") - 1)
             else:
                 ciphertext += chr(ord(i) + shift)
         else:
@@ -59,15 +57,15 @@ def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
 
     for k in range(len(ciphertext)):
         i = ciphertext[k]
-        shift = ord(keyword[k]) % 65 if 65 <= ord(keyword[k]) <= 90 else ord(keyword[k]) % 97
-        if ord('A') <= ord(i) <= ord('Z'):
-            if ord(i) - shift < ord('A'):
-                plaintext += chr(ord(i) - shift + ord('Z') - ord('A'))
+        shift = ord(keyword[k]) % ord("A") if ord("A") <= ord(keyword[k]) <= ord("Z") else ord(keyword[k]) % ord("a")
+        if ord("A") <= ord(i) <= ord("Z"):
+            if ord(i) - shift < ord("A"):
+                plaintext += chr(ord(i) - shift + ord("Z") - ord("A"))
             else:
                 plaintext += chr(ord(i) - shift)
-        elif ord('a') <= ord(i) <= ord('z'):
-            if ord(i) - shift < ord('a'):
-                plaintext += chr(ord(i) - shift + ord('Z') - ord('A'))
+        elif ord("a") <= ord(i) <= ord("z"):
+            if ord(i) - shift < ord("a"):
+                plaintext += chr(ord(i) - shift + ord("z") - ord("a"))
             else:
                 plaintext += chr(ord(i) - shift)
         else:
