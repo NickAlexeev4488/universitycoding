@@ -108,7 +108,7 @@ def find_empty_positions(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.Tuple[in
         for j in range(len(grid[i])):
             if grid[i][j] == ".":
                 return i, j
-    return 10, 10
+    return -1, -1
 
 
 def find_possible_values(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.Set[str]:
@@ -137,22 +137,15 @@ def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
     >>> solve(grid)
     [['5', '3', '4', '6', '7', '8', '9', '1', '2'], ['6', '7', '2', '1', '9', '5', '3', '4', '8'], ['1', '9', '8', '3', '4', '2', '5', '6', '7'], ['8', '5', '9', '7', '6', '1', '4', '2', '3'], ['4', '2', '6', '8', '5', '3', '7', '9', '1'], ['7', '1', '3', '9', '2', '4', '8', '5', '6'], ['9', '6', '1', '5', '3', '7', '2', '8', '4'], ['2', '8', '7', '4', '1', '9', '6', '3', '5'], ['3', '4', '5', '2', '8', '6', '1', '7', '9']]
     """
-    loc = find_empty_positions(grid)
-    if find_empty_positions(grid) == (10, 10):
+    if find_empty_positions(grid) == (-1, -1) or len(find_possible_values(grid, find_empty_positions(grid))) == 0:
         return grid
-    if loc:
-        row, col = loc
-    grid.append(["0"])
-    for num in find_possible_values(grid[:-1], (row, col)):
-        grid[row][col] = num
-        flag = 0
-        for i in solve(grid):
-            if '.' in i:
-                flag = 1
-        if flag == 1 or grid[9] == ["-1"]:
-            return solve(grid)
+    for i in find_possible_values(grid, find_empty_positions(grid)):
+        row, col = find_empty_positions(grid)
+        grid[row][col] = i
+        solve(grid)
+        if find_empty_positions(grid) == (-1, -1):
+            break
         grid[row][col] = "."
-    grid[9] = ["-1"]
     return grid
 
 
@@ -160,10 +153,6 @@ def check_solution(solution: tp.List[tp.List[str]]) -> bool:
     """Если решение solution верно, то вернуть True, в противном случае False"""
     # TODO: Add doctests with bad puzzles
 
-    solution.pop()
-    for i in solution:
-        if '.' in i:
-            return True
     for i in range(len(solution)):
         for j in range(len(solution[i])):
             loc = (i, j)
@@ -201,20 +190,14 @@ def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
     True
     """
     grid = [["."] * 9 for i in range(9)]
-    if N >= 81:
-        return solve(grid)
-
-    for i in range(N):
-        row, col = random.randint(0, 8), random.randint(0, 8)
-        while grid[row][col] != ".":
-            row, col = random.randint(0, 8), random.randint(0, 8)
-        grid[row][col] = str(random.randint(1, 9))
-
-    for i in range(len(grid)):
-        for j in range(len(grid[i])):
-            if grid[i][j] != ".":
-                for k in find_possible_values(grid, (i, j)):
-                    grid[i][j] = k
+    grid = solve(grid)
+    empty_cells = 81 - N
+    while empty_cells > 0:
+        i = random.randint(0, 8)
+        j = random.randint(0, 8)
+        if grid[i][j] != ".":
+            grid[i][j] = "."
+            empty_cells -= 1
     return grid
 
 
