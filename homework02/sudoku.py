@@ -142,21 +142,28 @@ def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
         return grid
     if loc:
         row, col = loc
-
-    for num in find_possible_values(grid, (row, col)):
+    grid.append(["0"])
+    for num in find_possible_values(grid[:-1], (row, col)):
         grid[row][col] = num
-        if solve(grid):
-            return grid
+        flag = 0
+        for i in solve(grid):
+            if '.' in i:
+                flag = 1
+        if flag == 1 or grid[9] == ["-1"]:
+            return solve(grid)
         grid[row][col] = "."
-
-    return None
+    grid[9] = ["-1"]
+    return grid
 
 
 def check_solution(solution: tp.List[tp.List[str]]) -> bool:
     """Если решение solution верно, то вернуть True, в противном случае False"""
     # TODO: Add doctests with bad puzzles
-    if solution is None:
-        return True
+
+    solution.pop()
+    for i in solution:
+        if '.' in i:
+            return True
     for i in range(len(solution)):
         for j in range(len(solution[i])):
             loc = (i, j)
@@ -195,9 +202,7 @@ def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
     """
     grid = [["."] * 9 for i in range(9)]
     if N >= 81:
-        grid = solve(grid)
-        if grid:
-            return grid
+        return solve(grid)
 
     for i in range(N):
         row, col = random.randint(0, 8), random.randint(0, 8)
