@@ -136,7 +136,7 @@ def solve(sudoku_grid: tp.List[tp.List[str]]) -> tp.List[tp.List[str]]:
         find_empty_positions(sudoku_grid) == (-1, -1)
         or len(find_possible_values(sudoku_grid, find_empty_positions(sudoku_grid))) == 0
     ):
-        return grid
+        return sudoku_grid
     for i in find_possible_values(sudoku_grid, find_empty_positions(sudoku_grid)):
         row, col = find_empty_positions(sudoku_grid)
         sudoku_grid[row][col] = i
