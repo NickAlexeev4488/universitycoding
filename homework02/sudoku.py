@@ -24,12 +24,7 @@ def display(sudoku_grid: tp.List[tp.List[str]]) -> None:
     width = 2
     line = "+".join(["-" * (width * 3)] * 3)
     for row in range(9):
-        print(
-            "".join(
-                sudoku_grid[row][col].center(width) + ("|" if str(col) in "25" else "")
-                for col in range(9)
-            )
-        )
+        print("".join(sudoku_grid[row][col].center(width) + ("|" if str(col) in "25" else "") for col in range(9)))
         if str(row) in "25":
             print(line)
     print()
@@ -54,9 +49,7 @@ def group(values: tp.List[T], num: int) -> tp.List[tp.List[T]]:
     return matrix
 
 
-def get_row(
-    sudoku_grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]
-) -> tp.List[str]:
+def get_row(sudoku_grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str]:
     """Возвращает все значения для номера строки, указанной в pos
     >>> get_row([['1', '2', "."], ['4', '5', '6'], ['7', '8', '9']], (0, 0))
     ['1', '2', "."]
@@ -68,9 +61,7 @@ def get_row(
     return sudoku_grid[pos[0]]
 
 
-def get_col(
-    sudoku_grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]
-) -> tp.List[str]:
+def get_col(sudoku_grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str]:
     """Возвращает все значения для номера столбца, указанного в pos
     >>> get_col([['1', '2', "."], ['4', '5', '6'], ['7', '8', '9']], (0, 0))
     ['1', '4', '7']
@@ -85,9 +76,7 @@ def get_col(
     return col
 
 
-def get_block(
-    sudoku_grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]
-) -> tp.List[str]:
+def get_block(sudoku_grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str]:
     block = []
     vert_block = (
         pos[0] - (pos[0] % 3),
@@ -121,9 +110,7 @@ def find_empty_positions(sudoku_grid: tp.List[tp.List[str]]) -> tp.Tuple[int, in
     return -1, -1
 
 
-def find_possible_values(
-    sudoku_grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]
-) -> tp.Set[str]:
+def find_possible_values(sudoku_grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.Set[str]:
     """Вернуть множество возможных значения для указанной позиции
     >>> grid = read_sudoku('puzzle1.txt')
     >>> values = find_possible_values(grid, (0,2))
@@ -147,8 +134,7 @@ def solve(sudoku_grid: tp.List[tp.List[str]]) -> tp.List[tp.List[str]]:
     """Решение пазла, заданного в grid"""
     if (
         find_empty_positions(sudoku_grid) == (-1, -1)
-        or len(find_possible_values(sudoku_grid, find_empty_positions(sudoku_grid)))
-        == 0
+        or len(find_possible_values(sudoku_grid, find_empty_positions(sudoku_grid))) == 0
     ):
         return grid
     for i in find_possible_values(sudoku_grid, find_empty_positions(sudoku_grid)):
