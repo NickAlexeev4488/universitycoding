@@ -132,14 +132,14 @@ def shortest_path(
 def encircled_exit(grid: List[List[Union[str, int]]], coord: Tuple[int, int]) -> bool:
     x, y = coord
     if (
-            coord == (0, 0)
-            or coord == (len(grid) - 1, len(grid) - 1)
-            or coord == (len(grid) - 1, 0)
-            or coord == (0, len(grid) - 1)
-            or x == 0 and grid[1][y] != " "
-            or x == len(grid) - 1 and grid[len(grid) - 2][y] != " "
-            or y == 0 and grid[x][1] != " "
-            or y == len(grid) - 1 and grid[x][len(grid) - 2] != " "
+        coord == (0, 0)
+        or coord == (len(grid) - 1, len(grid) - 1)
+        or coord == (len(grid) - 1, 0)
+        or coord == (0, len(grid) - 1)
+        or x == 0 and grid[1][y] != " "
+        or x == len(grid) - 1 and grid[len(grid) - 2][y] != " "
+        or y == 0 and grid[x][1] != " "
+        or y == len(grid) - 1 and grid[x][len(grid) - 2] != " "
     ):
         return True
     else:
