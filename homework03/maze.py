@@ -140,7 +140,8 @@ def encircled_exit(grid: List[List[Union[str, int]]], coord: Tuple[int, int]) ->
         and grid[1][y] != " "
         or x == len(grid) - 1
         and grid[len(grid) - 2][y] != " "
-        or y == 0 and grid[x][1] != " "
+        or y == 0
+        and grid[x][1] != " "
         or y == len(grid) - 1
         and grid[x][len(grid) - 2] != " "
     ):
