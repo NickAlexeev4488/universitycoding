@@ -146,8 +146,7 @@ def encircled_exit(grid: List[List[Union[str, int]]], coord: Tuple[int, int]) ->
         and grid[x][len(grid) - 2] != " "
     ):
         return True
-    else:
-        return False
+    return False
 
 
 def solve_maze(
@@ -159,19 +158,18 @@ def solve_maze(
             grid,
             exits[0],
         )
-    else:
-        for door in exits:
-            if encircled_exit(grid, door):
-                return grid, None
+    for door in exits:
+        if encircled_exit(grid, door):
+            return grid, None
     enter = exits[0]
     exit_point = exits[1]
     if exit_point[1] - enter[1] == 1 and exit_point[0] - enter[0] == 0:
         return grid, exits[::-1]
-    elif exit_point[1] - enter[1] == 0 and exit_point[0] - enter[0] == 1:
+    if exit_point[1] - enter[1] == 0 and exit_point[0] - enter[0] == 1:
         return grid, exits[::-1]
-    elif exit_point[0] - enter[0] == 0 and exit_point[1] - enter[1] == 1:
+    if exit_point[0] - enter[0] == 0 and exit_point[1] - enter[1] == 1:
         return grid, exits[::-1]
-    elif exit_point[0] - enter[0] == 1 and exit_point[1] - enter[1] == 0:
+    if exit_point[0] - enter[0] == 1 and exit_point[1] - enter[1] == 0:
         return grid, exits[::-1]
 
     grid[exits[0][0]][exits[0][1]] = 1
