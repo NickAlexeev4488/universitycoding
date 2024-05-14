@@ -71,7 +71,6 @@ class GameOfLife:
             self.curr_generation = self.get_next_generation()
             self.generations += 1
 
-
     @property
     def is_max_generations_exceeded(self) -> bool:
         """
@@ -107,4 +106,3 @@ class GameOfLife:
         with filename.open("w") as file:
             for row in self.curr_generation:
                 file.write("".join(map(str, row)) + "\n")
-

@@ -94,7 +94,6 @@ class GameOfLife:
                     (x * self.cell_size + 1, y * self.cell_size + 1, self.cell_size - 1, self.cell_size - 1),
                 )
 
-
     def get_neighbours(self, cell: Cell) -> Cells:
         """
         Вернуть список соседних клеток для клетки `cell`.
