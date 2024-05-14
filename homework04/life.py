@@ -104,7 +104,7 @@ class GameOfLife:
         """
         Сохранить текущее состояние клеток в указанный файл.
         """
-        with filename.open('w') as file:
+        with filename.open("w") as file:
             for row in self.curr_generation:
-                file.write(''.join(map(str, row)) + '\n')
+                file.write("".join(map(str, row)) + "\n")
 

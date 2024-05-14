@@ -10,17 +10,17 @@ class Console(UI):
 
     def draw_borders(self, screen) -> None:
         """Display borders."""
-        screen.addstr(0, 0, '+' + '-' * self.life.cols + '+')
+        screen.addstr(0, 0, "+" + "-" * self.life.cols + "+")
         for i in range(1, self.life.rows + 1):
-            screen.addstr(i, 0, '|')
-            screen.addstr(i, self.life.cols + 1, '|')
-        screen.addstr(self.life.rows + 1, 0, '+' + '-' * self.life.cols + '+')
+            screen.addstr(i, 0, "|")
+            screen.addstr(i, self.life.cols + 1, "|")
+        screen.addstr(self.life.rows + 1, 0, "+" + "-" * self.life.cols + "+")
 
     def draw_grid(self, screen) -> None:
         """Display the state of cells."""
         for y in range(self.life.rows):
             for x in range(self.life.cols):
-                screen.addstr(y + 1, x + 1, '*' if self.life.curr_generation[y][x] else ' ')
+                screen.addstr(y + 1, x + 1, "*" if self.life.curr_generation[y][x] else " ")
 
     def run(self) -> None:
         screen = curses.initscr()
@@ -36,6 +36,6 @@ class Console(UI):
 
 
 if __name__ == "__main__":
-    game = GameOfLife((20, 40), True, 20 )
+    game = GameOfLife((20, 40), True, 20)
     console_ui = Console(game)
     console_ui.run()

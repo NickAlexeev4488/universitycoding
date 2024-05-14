@@ -22,9 +22,10 @@ class GUI(UI):
         for y in range(self.life.rows):
             for x in range(self.life.cols):
                 color = pygame.Color("green") if self.life.curr_generation[y][x] == 1 else pygame.Color("white")
-                pygame.draw.rect(self.screen, color,
-                                 (x * self.cell_size + 1, y * self.cell_size + 1, self.cell_size - 1,
-                                  self.cell_size - 1))
+                pygame.draw.rect(
+                    self.screen,
+                    color,
+                    (x * self.cell_size + 1, y * self.cell_size + 1, self.cell_size - 1, self.cell_size - 1))
 
     def run(self) -> None:
         pygame.init()
@@ -44,8 +45,9 @@ class GUI(UI):
                 elif event.type == MOUSEBUTTONDOWN:
                     x, y = pygame.mouse.get_pos()
                     cell_x, cell_y = x // self.cell_size, y // self.cell_size
-                    self.life.curr_generation[cell_y][cell_x] = 1 if self.life.curr_generation[cell_y][cell_x] == 0 \
-                        else 0
+                    self.life.curr_generation[cell_y][cell_x] = (
+                        1 if self.life.curr_generation[cell_y][cell_x] == 0 else 0
+                    )
 
             if not self.onpause:
                 self.life.step()
