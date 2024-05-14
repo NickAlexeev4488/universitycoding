@@ -76,6 +76,8 @@ class GameOfLife:
         """
         Не превысило ли текущее число поколений максимально допустимое.
         """
+        if self.max_generations == float("inf"):
+            return False
         return self.max_generations <= self.generations
 
     @property
