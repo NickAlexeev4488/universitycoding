@@ -108,16 +108,3 @@ class GameOfLife:
         with filename.open("w") as file:
             for row in self.curr_generation:
                 file.write("".join(map(str, row)) + "\n")
-
-
-if __name__ == "__main__":
-    game = GameOfLife((6, 8), max_generations=20)
-    game.curr_generation = [
-            [1, 1, 0, 0, 1, 1, 1, 1],
-            [0, 1, 1, 1, 1, 1, 1, 0],
-            [1, 0, 1, 1, 0, 0, 0, 0],
-            [1, 0, 0, 0, 0, 0, 0, 1],
-            [1, 0, 1, 1, 1, 1, 0, 0],
-            [1, 1, 1, 1, 0, 1, 1, 1],
-        ]
-    print(game.get_next_generation())
