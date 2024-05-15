@@ -78,7 +78,8 @@ class GameOfLife:
         """
         if self.max_generations == float("inf"):
             return False
-        return self.max_generations <= self.generations
+
+        return int(self.max_generations) <= self.generations
 
     @property
     def is_changing(self) -> bool:
