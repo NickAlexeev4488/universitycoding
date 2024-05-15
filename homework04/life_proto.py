@@ -112,7 +112,7 @@ class GameOfLife:
         out : Cells
             Список соседних клеток.
         """
-        x, y = cell
+        y, x = cell
         offsets = [(-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1)]
         neighbours = []
         for offset_x, offset_y in offsets:
@@ -135,7 +135,7 @@ class GameOfLife:
         for y in range(self.cell_height):
             for x in range(self.cell_width):
                 current_cell = self.grid[y][x]
-                neighbours = self.get_neighbours((x, y))
+                neighbours = self.get_neighbours((y, x))
                 neighbours_count = sum(neighbours)
 
                 if current_cell == 1:

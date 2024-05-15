@@ -33,7 +33,7 @@ class GameOfLife:
         return grid
 
     def get_neighbours(self, cell: Cell) -> Cells:
-        x, y = cell
+        y, x = cell
         offsets = [(-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1)]
         neighbours = []
         for offset_x, offset_y in offsets:
@@ -48,7 +48,7 @@ class GameOfLife:
         for y in range(self.rows):
             for x in range(self.cols):
                 current_cell = self.curr_generation[y][x]
-                neighbours = self.get_neighbours((x, y))
+                neighbours = self.get_neighbours((y, x))
                 neighbours_count = sum(neighbours)
 
                 if current_cell == 1:
@@ -108,3 +108,16 @@ class GameOfLife:
         with filename.open("w") as file:
             for row in self.curr_generation:
                 file.write("".join(map(str, row)) + "\n")
+
+
+if __name__ == "__main__":
+    game = GameOfLife((6, 8), max_generations=20)
+    game.curr_generation = [
+            [1, 1, 0, 0, 1, 1, 1, 1],
+            [0, 1, 1, 1, 1, 1, 1, 0],
+            [1, 0, 1, 1, 0, 0, 0, 0],
+            [1, 0, 0, 0, 0, 0, 0, 1],
+            [1, 0, 1, 1, 1, 1, 0, 0],
+            [1, 1, 1, 1, 0, 1, 1, 1],
+        ]
+    print(game.get_next_generation())
