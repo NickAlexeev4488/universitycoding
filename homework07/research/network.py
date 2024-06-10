@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import networkx as nx
 import pandas as pd
 
-from vkapi.friends import get_friends, get_mutual
+from homework07.research.vkapi.friends import get_friends, get_mutual, MutualFriends
 
 
 def ego_network(
@@ -18,7 +18,24 @@ def ego_network(
     :param user_id: Идентификатор пользователя, для которого строится граф друзей.
     :param friends: Идентификаторы друзей, между которыми устанавливаются связи.
     """
-    pass
+    if not any((user_id, friends)):
+        raise ValueError("Either user_id or friends must be provided.")
+
+    if user_id is not None and friends is None:
+        friends_list = tp.cast(
+            tp.List[tp.Dict[str, tp.Any]],
+            get_friends(user_id=user_id, fields=["nickname"]).items,
+        )
+        friends = [f["id"] for f in friends_list if not f.get("deactivated")]
+
+    mutual_friends = tp.cast(
+        list[MutualFriends], get_mutual(target_uids=friends, source_uid=user_id)
+    )
+
+    edges = []
+    for relation in mutual_friends:
+        edges += [(person, relation["id"]) for person in relation["common_friends"]]
+    return edges
 
 
 def plot_ego_network(net: tp.List[tp.Tuple[int, int]]) -> None:
@@ -63,6 +80,6 @@ def describe_communities(
         for uid in cluster_users:
             for friend in friends:
                 if uid == friend["id"]:
-                    data.append([cluster_n] + [friend.get(field) for field in fields])  # type: ignore
+                    data.append([cluster_n] + [friend.get(field) for field in fields])
                     break
     return pd.DataFrame(data=data, columns=["cluster"] + fields)

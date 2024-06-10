@@ -4,7 +4,7 @@ import unittest
 
 import responses
 
-from vkapi.friends import FriendsResponse, get_friends, get_mutual
+from homework07.research.vkapi.friends import FriendsResponse, get_friends, get_mutual
 
 
 class FriendsTestCase(unittest.TestCase):

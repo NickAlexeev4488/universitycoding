@@ -3,9 +3,11 @@ import math
 import time
 import typing as tp
 
-from vkapi import config, session
-from vkapi.exceptions import APIError
+from homework07.research.vkapi import config
+from homework07.research.vkapi.session import Session
+from homework07.research.vkapi.exceptions import APIError
 
+default_session = Session(config.VK_CONFIG["domain"])
 QueryParams = tp.Optional[tp.Dict[str, tp.Union[str, int]]]
 
 
@@ -16,7 +18,10 @@ class FriendsResponse:
 
 
 def get_friends(
-    user_id: int, count: int = 5000, offset: int = 0, fields: tp.Optional[tp.List[str]] = None
+    user_id: int,
+    count: int = 5000,
+    offset: int = 0,
+    fields: tp.Optional[tp.List[str]] = None,
 ) -> FriendsResponse:
     """
     Получить список идентификаторов друзей пользователя или расширенную информацию
@@ -28,7 +33,19 @@ def get_friends(
     :param fields: Список полей, которые нужно получить для каждого пользователя.
     :return: Список идентификаторов друзей пользователя или список пользователей.
     """
-    pass
+    params = {
+        "user_id": user_id,
+        "count": count,
+        "offset": offset,
+        "fields": fields,
+        "v": config.VK_CONFIG["version"],
+        "access_token": config.VK_CONFIG["access_token"],
+    }
+    response = default_session.get(url="friends.get", params=params)
+    data = response.json().get("response")
+    if not data:
+        raise APIError(response.json())
+    return FriendsResponse(count=data["count"], items=data["items"])
 
 
 class MutualFriends(tp.TypedDict):
@@ -57,4 +74,43 @@ def get_mutual(
     :param offset: Смещение, необходимое для выборки определенного подмножества общих друзей.
     :param progress: Callback для отображения прогресса.
     """
-    pass
+    if target_uids is not None and len(target_uids) > 100:
+        mutual_friends: tp.List[MutualFriends] = []
+        for i in range(math.ceil(len(target_uids) / 100)):
+            offset = i * 100
+            mutual_friends.extend(
+                tp.cast(
+                    list[MutualFriends],
+                    get_mutual(
+                        source_uid=source_uid,
+                        target_uid=None,
+                        target_uids=target_uids[offset: offset + 100],
+                        order=order,
+                        count=count,
+                        offset=offset,
+                        progress=progress,
+                    ),
+                )
+            )
+            time.sleep(
+                0.34
+            )
+        return mutual_friends
+
+    params = {
+        "v": config.VK_CONFIG["version"],
+        "access_token": config.VK_CONFIG["access_token"],
+        "need_common_count": "0",
+        "source_uid": source_uid,
+        "target_uid": target_uid,
+        "target_uids": ",".join(map(str, target_uids)) if target_uids else None,
+        "order": order,
+        "count": count,
+        "offset": offset,
+    }
+    params = {k: v for k, v in params.items() if v is not None}
+    response = default_session.get("friends.getMutual", params=params)
+    data = response.json().get("response")
+    if not data:
+        raise APIError(response.json())
+    return data
