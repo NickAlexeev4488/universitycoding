@@ -36,7 +36,7 @@ class Session:
         self.base_url = base_url
         self.retry = Retry(
             status_forcelist=[429, 500, 502, 503, 504],
-            allowed_methods=["HEAD", "GET", "OPTIONS"],
+            # allowed_methods=["HEAD", "GET", "OPTIONS"],
             total=max_retries,
             backoff_factor=backoff_factor
         )

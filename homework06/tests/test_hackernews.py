@@ -8,7 +8,7 @@ from hackernews import add_label, classify_news, update_news
 
 
 class TestHackernews(unittest.TestCase):
-    @mock.patch("hackernews.session")
+    @mock.patch("homework06.hackernews.session")
     def test_add_label(self, session):
         with boddle(query={"id": 1, "label": "never"}):
             news = News(
@@ -24,8 +24,8 @@ class TestHackernews(unittest.TestCase):
             self.assertTrue(news.label == "never")
             self.assertTrue(session.mock_calls[-1] == call().commit())
 
-    @mock.patch("hackernews.get_news")
-    @mock.patch("hackernews.session")
+    @mock.patch("homework06.hackernews.get_news")
+    @mock.patch("homework06.hackernews.session")
     def test_update_news(self, session, get_news):
         news = [
             {
@@ -63,7 +63,7 @@ class TestHackernews(unittest.TestCase):
                 n_commit += 1
         self.assertEqual(2, n_commit)
 
-    @mock.patch("hackernews.session")
+    @mock.patch("homework06.hackernews.session")
     def test_classify_news(self, session):
         news_cl = [
             News(
