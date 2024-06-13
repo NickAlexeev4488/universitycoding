@@ -6,8 +6,9 @@ from db import News, session
 from scraputils import get_news
 
 
-def clean(s): 
-    translator = str.maketrans("", "", string.punctuation) 
+def clean(s):
+    translator = str.maketrans("", "", string.punctuation)
+
     return s.translate(translator)
 
 
@@ -15,7 +16,8 @@ def clean(s):
 def news_list():
     s = session()
     rows = s.query(News).filter(News.label == None).all()
-    return template('news_template', rows=rows)
+    return template("news_template", rows=rows)
+
 
 @route("/add_label/")
 def add_label():
@@ -36,9 +38,7 @@ def update_news():
     news_list = get_news("https://news.ycombinator.com/newest")
 
     for article in news_list:
-        flag = s.query(News).filter(
-            News.author == article["author"] and News.title == article["title"]
-        ).first()
+        flag = s.query(News).filter(News.author == article["author"] and News.title == article["title"]).first()
         if flag:
             continue
         news = News(**article)
@@ -52,7 +52,7 @@ def update_news():
 def classify_news():
     bayes = NaiveBayesClassifier()
     s = session()
-    
+
     news_cl = s.query(News).filter(News.label != None).all()
     X = []
     ys = []
@@ -76,14 +76,13 @@ def classify_news():
         for news in news_not_cl:
             if news.label == cl:
                 answer.append(news)
-    
     return answer
 
 
-@route('/recommendations')
+@route("/recommendations")
 def recommendations():
     classified_news = classify_news()
-    return template('recs_template', rows=classified_news)
+    return template("recs_template", rows=classified_news)
 
 
 if __name__ == "__main__":

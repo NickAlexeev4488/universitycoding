@@ -4,12 +4,11 @@ import numpy as np
 
 
 class NaiveBayesClassifier:
-
     def __init__(self, alpha=1.00):
         self.smoothing = alpha
 
     def fit(self, X, y):
-        """ Fit Naive Bayes classifier according to X, y. """
+        """Fit Naive Bayes classifier according to X, y."""
         self.unique_classes = np.unique(y)
         self.prior_probs = {}
         self.conditional_probs = {}
@@ -45,7 +44,7 @@ class NaiveBayesClassifier:
             )
 
     def predict(self, X):
-        """ Perform classification on an array of test vectors X. """
+        """Perform classification on an array of test vectors X."""
         predictions = []
         for doc in X:
             doc_words = doc.split()
@@ -64,7 +63,7 @@ class NaiveBayesClassifier:
         return predictions
 
     def score(self, X_test, y_test):
-        """ Returns the mean accuracy on the given test data and labels. """
+        """Returns the mean accuracy on the given test data and labels."""
         predicted_labels = self.predict(X_test)
         correct_predictions = sum(1 for i in range(len(y_test)) if predicted_labels[i] == y_test[i])
         accuracy = correct_predictions / len(y_test)
