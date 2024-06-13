@@ -2,7 +2,7 @@ import csv
 import string
 import unittest
 
-from homework06.bayes import NaiveBayesClassifier
+from bayes import NaiveBayesClassifier
 
 PATH_FOR_GIT = "c:/Users/alexluchshiy/universitycoding/homework06/data/"
 
